@@ -75,6 +75,8 @@ optional arguments:
 
 ### Testing
 
+*Note*: The current test code is mainly for evaluation purposes
+
 ```
 python test.py --data_X '/path/to/test.txt' --data_Y '/path/to/test_labels.txt' --checkpoint_model '/path/to/saved/model/checkpoint_cv3_3.pkl'
 ```
