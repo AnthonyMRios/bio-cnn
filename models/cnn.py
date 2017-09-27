@@ -72,19 +72,9 @@ class CNN(object):
         self.predict_loss = theano.function([idxs, Y, dropout_switch], [pyx.argmax(axis=1), L], allow_input_downcast=True)
 
     def __getstate__(self):
-        data = [self.emb.get_value(), self.w_o.get_value(), self.b_o.get_value()]
-        data += [x.get_value() for x in self.filter_w]
-        data += [x.get_value() for x in self.filter_b]
+        data = [x.get_value() for x in self.params]
         return data
 
     def __setstate__(self, data):
-        self.emb.set_value(data[0])
-        self.w_o.set_value(data[1])
-        self.b_o.set_value(data[2])
-        cnt = 3
-        for f in self.filter_w:
-            f.set_value(data[cnt])
-            cnt += 1
-        for f in self.filter_b:
-            f.set_value(data[cnt])
-            cnt += 1
+        for w1, w2 in zip(self.params, data):
+            w1.set_value(w2)
