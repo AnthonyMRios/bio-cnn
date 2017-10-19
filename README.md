@@ -111,8 +111,8 @@ optional arguments:
 
 This repo is based on the following paper:
 
-> Kim, Yoon. "Convolutional neural networks for sentence classification." In EMNLP. 2014.
+> Yoon Kim. "Convolutional neural networks for sentence classification." In EMNLP. 2014.
 
 Likewise, this code was created for experiments in the following paper:
 
-> Rios, Anthony, and Ramakanth Kavuluru. "Convolutional neural networks for biomedical text classification: application in indexing biomedical articles." Proceedings of the 6th ACM Conference on Bioinformatics, Computational Biology and Health Informatics. ACM, 2015.
+> Anthony Rios and Ramakanth Kavuluru. "Convolutional neural networks for biomedical text classification: application in indexing biomedical articles." Proceedings of the 6th ACM Conference on Bioinformatics, Computational Biology and Health Informatics. ACM, 2015.
