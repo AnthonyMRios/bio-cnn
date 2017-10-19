@@ -1,6 +1,8 @@
 # Convolutional Neural Networks for Biomedical Text Classification
 
-Implementation of a convolutional neural network for text classification.
+Implementation of the Yoon Kim model [Convolutional Neural Networks for Sentence Classification](http://arxiv.org/abs/1408.5882) (EMNLP 2014). However, rather than training with Adadelta or Adagrad, we use the [Adam optimizer](https://arxiv.org/abs/1412.6980).
+
+The model works at the word level by convolving over the successive word vectors for each word in a document. Then a document vector is created using max-over-time pooling which is then passed to a final softmax output layer.
 
 Example data is provided in the data folder.
 
@@ -16,9 +18,13 @@ Example data is provided in the data folder.
 
 ### Training
 
+To simply train the model, run the following command:
+
 ```
 python train.py --word_vectors '/path/to/word_vecs2/word_vectors' --train_data_X '/path/to/train.txt' --train_data_Y '/path/to/train_labels.txt' --val_data_X '/path/to/dev.txt' --val_data_Y '/path/to/dev_labels.txt' --checkpoint_dir '/where/to/save/model/checkpoints'
 ```
+
+*note*: Word vectors must be in the gensim format.
 
 ### Training Options
 
@@ -42,7 +48,7 @@ optional arguments:
   --num_epochs NUM_EPOCHS
                         Number of updates to make.
   --word_vectors WORD_VECTORS
-                        Word vecotors filepath.
+                        Word vectors filepath.
   --checkpoint_dir CHECKPOINT_DIR
                         Checkpoint directory.
   --checkpoint_name CHECKPOINT_NAME
@@ -101,17 +107,12 @@ optional arguments:
                         Mini-batch Size
 ```
 
-## Cite
+## Acknowledgements
+
+This repo is based on the following paper:
+
+> Kim, Yoon. "Convolutional neural networks for sentence classification." In EMNLP. 2014.
+
+Likewise, this code was created for experiments in the following paper:
 
 > Rios, Anthony, and Ramakanth Kavuluru. "Convolutional neural networks for biomedical text classification: application in indexing biomedical articles." Proceedings of the 6th ACM Conference on Bioinformatics, Computational Biology and Health Informatics. ACM, 2015.
-
-```
-@inproceedings{rios2015convolutional,
-  title={Convolutional neural networks for biomedical text classification: application in indexing biomedical articles},
-  author={Rios, Anthony and Kavuluru, Ramakanth},
-  booktitle={Proceedings of the 6th ACM Conference on Bioinformatics, Computational Biology and Health Informatics},
-  pages={258--267},
-  year={2015},
-  organization={ACM}
-}
-```
