@@ -32,6 +32,9 @@ class CNN(object):
             self.filter_w.append(theano.shared(value=he_normal((nf, 1, filter_size, de)).astype('float32')))
             self.filter_b.append(theano.shared(value=np.zeros((nf,)).astype('float32')))
 
+        # To use wide features uncomment the following two lines
+        #wide_feature_dim = 32
+        #self.w_o = theano.shared(value=he_normal((nf*len(fs)+de+8*de+wide_feature_dim, nc)).astype('float32'))
         self.w_o = theano.shared(value=he_normal((nf*len(fs)+de+8*de, nc)).astype('float32'))
         self.b_o = theano.shared(value=as_floatX(np.zeros((nc,))))
 
@@ -58,14 +61,23 @@ class CNN(object):
             l1_w = l1_w.reshape((l1_w.shape[0], 1, nf))
             l1_w_all.append(l1_w.flatten(2))
 
+        # To facilite wide features please uncoment the following two lines
+        #wide_features = T.imatrix('y')
+        #l1_w_all.append(wide_features)
         l1 = T.concatenate(l1_w_all, axis=1)
         h = dropout(l1, dropout_switch, p_drop)
 
         pyx = T.nnet.softmax(T.dot(h, self.w_o) + self.b_o)
 
+        # For the ordinal model comment out this line.
+        #L = T.nnet.nnet.binary_crossentropy(pyx, Y).mean() + penalty*sum([(p**2).sum() for p in self.params])
         L = T.nnet.nnet.categorical_crossentropy(pyx, Y).mean() + penalty*sum([(p**2).sum() for p in self.params])
         updates = Adam(L, self.params, lr2=lr, clip=clip)
 
+        # To use wide features you need to pass them to the following three functions
+        #self.train_batch = theano.function([idxs, Y, wide_features, dropout_switch], [L, pyx.argmax(axis=1)], updates=updates, allow_input_downcast=True)
+        #self.predict = theano.function([idxs, wide_features,, dropout_switch], outputs=pyx.argmax(axis=1), allow_input_downcast=True)
+        #self.predict_proba = theano.function([idxs, wide_features,, dropout_switch], outputs=pyx, allow_input_downcast=True)
         self.train_batch = theano.function([idxs, Y, dropout_switch], [L, pyx.argmax(axis=1)], updates=updates, allow_input_downcast=True)
         self.predict = theano.function([idxs, dropout_switch], outputs=pyx.argmax(axis=1), allow_input_downcast=True)
         self.predict_proba = theano.function([idxs, dropout_switch], outputs=pyx, allow_input_downcast=True)
