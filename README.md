@@ -4,6 +4,9 @@ Implementation of the Yoon Kim model [Convolutional Neural Networks for Sentence
 
 The model works at the word level by convolving over the successive word vectors for each word in a document. Then a document vector is created using max-over-time pooling which is then passed to a final softmax output layer.
 
+
+We have extended the base Yoon Kim model in two ways. First, we have added the ability to pass auxiliary features to the final output layer (deep and wide). This allows us to use information that the CNN may  not be able to extract on its own. To use wide features, lines 36, 37, 65, 66, 78, 79, and 80  in cnn.py must be uncommented. Also, the wide features you want to use must be passed to the train_batch and predict functions in train.py and test.py. The second extension involves training an ordinal loss rather than the standard multi-class cross-entropy. The ordinal loss is useful when there is a natural order to the classes. For this extension only line 73 needs to be uncommented in cnn.py. In the train.py file, a multi-hot Y rather than one-hot encoded Y must be passed to train_batch. Specifically, given an ordinal scale (ABSENT, MILD, MODERATE, SEVERE), the multi-hot Y should be formated as [0,0,0], [1,0,0], [1,1,0], and [1,1,1], respectively.
+
 Example data is provided in the data folder.
 
 ## Required Packages
@@ -113,9 +116,7 @@ This repo is based on the following paper:
 
 > Yoon Kim. "Convolutional neural networks for sentence classification." In EMNLP. 2014.
 
-### Extensions
-
-We have extended the base Yoon Kim model in two ways. First, we have added the ability to pass auxiliary features to the final output layer (deep and wide). This allows us to use information that the CNN may  not be able to extract on its own. To use wide features, lines 36, 37, 65, 66, 78, 79, and 80  in cnn.py must be uncommented. Also, the wide features you want to use must be passed to the train_batch and predict functions in train.py and test.py. This extension was used for the following paper:
+The wide features and CNN applications to biomedical text classification was used in the following paper:
 
 > Anthony Rios and Ramakanth Kavuluru. "[Convolutional neural networks for biomedical text classification: application in indexing biomedical articles.](http://protocols.netlab.uky.edu/~rvkavu2/research/bcb-15.pdf)" Proceedings of the 6th ACM Conference on Bioinformatics, Computational Biology and Health Informatics. ACM, 2015.
 
@@ -130,7 +131,7 @@ We have extended the base Yoon Kim model in two ways. First, we have added the a
 }
 ```
 
-The second extension involves training an ordinal loss rather than the standard multi-class cross-entropy. The ordinal loss is useful when there is a natural order to the classes. For this extension only line 73 needs to be uncommented in cnn.py. In the train.py file, a multi-hot Y rather than one-hot encoded Y must be passed to train_batch. Specifically, given an ordinal scale (ABSENT, MILD, MODERATE, SEVERE), the multi-hot Y should be formated as [0,0,0], [1,0,0], [1,1,0], and [1,1,1], respectively. The following paper is the origin of this extension:
+The ordinal extension is part of our method which ranked 3rd among 24 teams in the 2016 CEGS N-GRID NLP Shared Task. The details of the entire method can be found in the paper below:
 
 > Anthony Rios and Ramakanth Kavuluru. "[Ordinal convolutional neural networks for predicting RDoC positive valence psychiatric symptom severity scores.](http://protocols.netlab.uky.edu/~rvkavu2/research/rdoc-rios-jbi-17.pdf)" Journal of Biomedical Informatics (2017).
 
