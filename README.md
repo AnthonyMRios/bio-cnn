@@ -1,11 +1,8 @@
 # Convolutional Neural Networks for Biomedical Text Classification
 
-Implementation of the Yoon Kim model [Convolutional Neural Networks for Sentence Classification](http://arxiv.org/abs/1408.5882) (EMNLP 2014). However, rather than training with Adadelta or Adagrad, we use the [Adam optimizer](https://arxiv.org/abs/1412.6980).
+Implementation of the basic Yoon Kim model (EMNLP 2014) for text classification with our extensions to incorporate wide features (Rios and Kavuluru, BCB 2015) and employ an ordinal loss (Rios and Kavuluru, JBI 2017).
 
-The model works at the word level by convolving over the successive word vectors for each word in a document. Then a document vector is created using max-over-time pooling which is then passed to a final softmax output layer.
-
-
-We have extended the base Yoon Kim model in two ways. First, we have added the ability to pass auxiliary features to the final output layer (deep and wide). This allows us to use information that the CNN may  not be able to extract on its own. To use wide features, lines 36, 37, 65, 66, 78, 79, and 80  in cnn.py must be uncommented. Also, the wide features you want to use must be passed to the train_batch and predict functions in train.py and test.py. The second extension involves training an ordinal loss rather than the standard multi-class cross-entropy. The ordinal loss is useful when there is a natural order to the classes. For this extension only line 73 needs to be uncommented in cnn.py. In the train.py file, a multi-hot Y rather than one-hot encoded Y must be passed to train_batch. Specifically, given an ordinal scale (ABSENT, MILD, MODERATE, SEVERE), the multi-hot Y should be formated as [0,0,0], [1,0,0], [1,1,0], and [1,1,1], respectively.
+For the first extension, we have added the ability to pass auxiliary features to the final output layer (deep and wide). This allows us to use information that the CNN may  not be able to extract on its own. To use wide features, lines 36, 37, 65, 66, 78, 79, and 80  in cnn.py must be uncommented. Also, the wide features you want to use must be passed to the train_batch and predict functions in train.py and test.py. The second extension involves training an ordinal loss rather than the standard multi-class cross-entropy. The ordinal loss is useful when there is a natural order to the classes. For this extension only line 73 needs to be uncommented in cnn.py. In the train.py file, a multi-hot Y rather than one-hot encoded Y must be passed to train_batch. Specifically, given an ordinal scale (ABSENT, MILD, MODERATE, SEVERE), the multi-hot Y should be formated as [0,0,0], [1,0,0], [1,1,0], and [1,1,1], respectively.
 
 Example data is provided in the data folder.
 
