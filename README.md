@@ -119,6 +119,27 @@ We have extended the base Yoon Kim model in two ways. First, we have added the a
 
 > Anthony Rios and Ramakanth Kavuluru. "[Convolutional neural networks for biomedical text classification: application in indexing biomedical articles.](http://protocols.netlab.uky.edu/~rvkavu2/research/bcb-15.pdf)" Proceedings of the 6th ACM Conference on Bioinformatics, Computational Biology and Health Informatics. ACM, 2015.
 
+```
+@inproceedings{rios2015convolutional,
+  title={Convolutional neural networks for biomedical text classification: application in indexing biomedical articles},
+  author={Rios, Anthony and Kavuluru, Ramakanth},
+  booktitle={Proceedings of the 6th ACM Conference on Bioinformatics, Computational Biology and Health Informatics},
+  pages={258--267},
+  year={2015},
+  organization={ACM}
+}
+```
+
 The second extension involves training an ordinal loss rather than the standard multi-class cross-entropy. The ordinal loss is useful when there is a natural order to the classes. For this extension only line 73 needs to be uncommented in cnn.py. In the train.py file, a multi-hot Y rather than one-hot encoded Y must be passed to train_batch. Specifically, given an ordinal scale (ABSENT, MILD, MODERATE, SEVERE), the multi-hot Y should be formated as [0,0,0], [1,0,0], [1,1,0], and [1,1,1], respectively. The following paper is the origin of this extension:
 
 > Anthony Rios and Ramakanth Kavuluru. "[Ordinal convolutional neural networks for predicting RDoC positive valence psychiatric symptom severity scores.](http://protocols.netlab.uky.edu/~rvkavu2/research/rdoc-rios-jbi-17.pdf)" Journal of Biomedical Informatics (2017).
+
+```
+@article{rios2017ordinal,
+  title={Ordinal convolutional neural networks for predicting RDoC positive valence psychiatric symptom severity scores},
+  author={Rios, Anthony and Kavuluru, Ramakanth},
+  journal={Journal of Biomedical Informatics},
+  year={2017},
+  publisher={Elsevier}
+}
+```
